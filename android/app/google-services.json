@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "775012978091",
+    "project_id": "ethabah-f9a98",
+    "storage_bucket": "ethabah-f9a98.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:775012978091:android:3aae6609e88301d695d6ee",
+        "android_client_info": {
+          "package_name": "com.example.ethabah"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA77UXljNXNpY0Si0egm15Hsykge9gSHZs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -1,7 +1,6 @@
 import 'dart:developer';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/material.dart';
-import 'package:get/get.dart';
+
 
 class AuthFirebaseServices {
   final FirebaseAuth _auth = FirebaseAuth.instance;
@@ -53,13 +52,14 @@ class AuthFirebaseServices {
     required String phoneNumber,
     required Function(String, int?) codeSent,
     required Function(String) codeAutoRetrievalTimeout,
+    Function(FirebaseAuthException)? verificationFailed
   }) async {
     try {
       //log('Resending code to $phoneNumber');
       await _auth.verifyPhoneNumber(
         phoneNumber: phoneNumber,
         verificationCompleted: (PhoneAuthCredential credential) {},
-        verificationFailed: (FirebaseAuthException e) {},
+        verificationFailed: verificationFailed!,
         codeSent: codeSent,
         codeAutoRetrievalTimeout: codeAutoRetrievalTimeout,
       );

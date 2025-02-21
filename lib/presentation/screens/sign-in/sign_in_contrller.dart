@@ -90,67 +90,7 @@ class SignInController extends GetxController {
     });
   }
 
-  // void resetTimer() {
-  //   _otpTimer?.cancel();
-  //   startTimer();
-  // }
-  //
-  // @override
-  // void onClose() {
-  //   _otpTimer?.cancel();
-  //   for (var controller in otpControllers) {
-  //     controller.dispose();
-  //   }
-  //   for (var node in focusNodes) {
-  //     node.dispose();
-  //   }
-  //   super.onClose();
-  // }
-  // Future<void> signIn() async {
-  //   if (validateEmail() && validatePassword()) {
-  //     isLoading.value = true;
-  //     try {
-  //       Map<String, dynamic> result = await AuthProvider.login(
-  //         emailController.text,
-  //         passwordController.text,
-  //       );
-  //       if (result['success']) {
-  //         if (result['role'] == 2) {
-  //           Get.offAllNamed(RoutesConstants.dashboard);
-  //         } else if (result['role'] == 0) {
-  //           Get.offAllNamed(RoutesConstants.investorDashboard);
-  //         } else {
-  //           // Get.snackbar(
-  //           //   snackPosition: SnackPosition.TOP,
-  //           //   margin: const EdgeInsets.all(10),
-  //           //   StringConstants.error,
-  //           //   StringConstants.somethingWentWrong,
-  //           //   backgroundColor: Colors.red,
-  //           //   colorText: Colors.white,
-  //           // );
-  //         }
-  //       } else {
-  //         Get.snackbar(
-  //           snackPosition: SnackPosition.TOP,
-  //           margin: const EdgeInsets.all(10),
-  //           StringConstants.error,
-  //           StringConstants.invalidCredentials,
-  //           backgroundColor: Colors.red,
-  //           colorText: Colors.white,
-  //         );
-  //       }
-  //     } catch (e) {
-  //       Get.snackbar(
-  //         StringConstants.error,
-  //         e.toString(),
-  //         backgroundColor: Colors.red,
-  //         colorText: Colors.white,
-  //       );
-  //     } finally {
-  //       isLoading.value = false;
-  //     }
-  //   }
-  // }
+
 
   Future<void> getOtpCode() async {
     print('${phoneController.text}');
@@ -193,7 +133,6 @@ class SignInController extends GetxController {
   }
 
   void verifyOtp() async {
-    print('+966${phoneController.text}');
     try {
 
       await _authService.resendCode(
@@ -220,7 +159,20 @@ class SignInController extends GetxController {
           isOTPsendLoading.value = false;
 
         },
-      );
+        verificationFailed: (FirebaseAuthException e){
+          isOTPsendLoading.value = false;
+          Get.snackbar(
+            'Error'.tr,
+            e.message.toString(),
+            snackPosition: SnackPosition.TOP,
+            backgroundColor: Colors.red,
+            colorText: Colors.white,
+          );
+
+        }
+      ).catchError((onError){
+        isOTPsendLoading.value = false;
+      });
 
     } catch (error) {
       log('Failed with error code: ${error.toString()}');
@@ -316,67 +268,7 @@ class SignInController extends GetxController {
   }
 
 
-// void resetTimer() {
-//   _otpTimer?.cancel();
-//   startTimer();
-// }
-//
-// @override
-// void onClose() {
-//   _otpTimer?.cancel();
-//   for (var controller in otpControllers) {
-//     controller.dispose();
-//   }
-//   for (var node in focusNodes) {
-//     node.dispose();
-//   }
-//   super.onClose();
-// }
-// Future<void> signIn() async {
-//   if (validateEmail() && validatePassword()) {
-//     isLoading.value = true;
-//     try {
-//       Map<String, dynamic> result = await AuthProvider.login(
-//         emailController.text,
-//         passwordController.text,
-//       );
-//       if (result['success']) {
-//         if (result['role'] == 2) {
-//           Get.offAllNamed(RoutesConstants.dashboard);
-//         } else if (result['role'] == 0) {
-//           Get.offAllNamed(RoutesConstants.investorDashboard);
-//         } else {
-//           // Get.snackbar(
-//           //   snackPosition: SnackPosition.TOP,
-//           //   margin: const EdgeInsets.all(10),
-//           //   StringConstants.error,
-//           //   StringConstants.somethingWentWrong,
-//           //   backgroundColor: Colors.red,
-//           //   colorText: Colors.white,
-//           // );
-//         }
-//       } else {
-//         Get.snackbar(
-//           snackPosition: SnackPosition.TOP,
-//           margin: const EdgeInsets.all(10),
-//           StringConstants.error,
-//           StringConstants.invalidCredentials,
-//           backgroundColor: Colors.red,
-//           colorText: Colors.white,
-//         );
-//       }
-//     } catch (e) {
-//       Get.snackbar(
-//         StringConstants.error,
-//         e.toString(),
-//         backgroundColor: Colors.red,
-//         colorText: Colors.white,
-//       );
-//     } finally {
-//       isLoading.value = false;
-//     }
-//   }
-// }
+
 
 
 }
